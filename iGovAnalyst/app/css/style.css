@@ -1,0 +1,78 @@
+﻿body {
+    min-height: 2000px;
+    padding-top: 50px;
+}
+
+.progress {
+    height: 30px;
+    vertical-align: middle;
+}
+
+.navbar-brand {
+    line-height: 0.7;
+    font-size: 17pt;
+}
+
+    .navbar-brand > span {
+        font-size: 8pt;
+    }
+
+
+.eject {
+    background: green;
+    font-weight: 600;
+}
+
+.reject {
+    color: red;
+}
+
+.ctnr {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+
+.cliped {
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+}
+
+.name-service {
+    height: 25px;
+}
+
+
+ .turn {
+    -moz-transform: rotate(90deg); /* Для Firefox */
+    -ms-transform: rotate(90deg); /* Для IE */
+    -webkit-transform: rotate(90deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(90deg); /* Для Opera */
+    transform: rotate(90deg);
+   }
+
+
+w50 {
+    width: 50px;
+}
+w100 {
+    width: 100px;
+}
+w150 {
+    width: 150px;
+}
+w200 {
+    width: 200px;
+}
+w300 {
+    width: 300px;
+}
+w400 {
+    width: 300px;
+}
+w500 {
+    width: 300px;
+}
+w1000 {
+    width: 1000px;
+}

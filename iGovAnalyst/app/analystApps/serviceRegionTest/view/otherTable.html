@@ -1,0 +1,12 @@
+﻿<table class="table">
+    <tr>
+        <th ng-repeat="hed in visionMain.header">
+            {{hed}}
+        </th>
+    </tr>
+
+    <tr ng-repeat="rows in visionMain.csv">
+        <td ng-repeat="colum in rows">{{colum}}</td>
+
+    </tr>
+</table>

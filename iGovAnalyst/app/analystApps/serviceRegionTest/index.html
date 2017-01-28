@@ -1,0 +1,51 @@
+﻿<div ng-controller="CtrlTest">
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-form navbar-top" id="bs-example-navbar-collapse-1">
+
+                <form class="navbar-form">
+                    <div class="form-inline col-lg-9">
+
+
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curBranch" ng-options="bran.name for bran in branchs track by bran.value"></select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curFileName" ng-options="file.name for file in scvFiles track by file.value"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curRegion" ng-options="reg.sName for reg in csvRegion.csv track by reg.sID_UA" ng-show="csvRegion.csv.length != null"></select>
+                        </div>
+
+                        <button class="btn btn-default" ng-click="getFile()" ng-disabled="curBranch.value == null || curRegion.nID == null" ng-show="csvRegion.csv.length != null">Get{{curBranch.value}}</button>
+
+                        <button class="btn btn-default" ng-click="getResult()" ng-disabled="curBranch.value == null || curRegion.nID == null" ng-show="csvRegion.csv.length != null">Result</button>
+
+
+                        <br />
+                        <button class="btn btn-default" ng-click="ClearTable()" ng-disabled="curBranch.value == null">Clear-{{curBranch.value}}</button>
+                        <button class="btn btn-default" ng-click="LoadGitHubTable()" ng-disabled="curBranch.value == null">LoadGitHub-{{curBranch.value}}</button>
+                        <span>sID_UA: {{curRegion.sID_UA}}</span>
+                        <span>nID: {{curRegion.nID}}</span>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="progress progress-striped" ng-class="progres.act ? 'active': ' '">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{progres.val}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progres.val}}%;">
+                                {{progres.val}}%
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <ng-include src="urlTable"></ng-include>
+    </div>
+</div>

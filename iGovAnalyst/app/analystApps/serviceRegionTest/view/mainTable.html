@@ -1,0 +1,29 @@
+﻿<h1>{{curRegion.sName}} область</h1>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Відповідальний орган
+        </th>
+        <th>
+            Назва послуги
+        </th>
+        <th ng-repeat="hed in visionMain.header.cities">
+            {{hed.sName}}
+        </th>
+    </tr>
+    <tr ng-repeat="rows in visionMain.body">
+        <td>
+            {{rows.firstColumn.sSubjectOperatorName}}
+        </td>
+        <td>
+            {{rows.firstColumn.sName}}
+        </td>
+        <td ng-repeat="cell in rows.bodyColumn" ng-class="(cell.flag)?'eject':'reject'">
+            <span ng-if="cell.flag">{{cell.nID_Place}}</span>            
+        </td>
+
+
+    </tr>
+</table>

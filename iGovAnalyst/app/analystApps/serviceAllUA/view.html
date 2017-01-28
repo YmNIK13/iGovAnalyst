@@ -1,0 +1,46 @@
+﻿<div ng-controller="serviceAllUACtrl">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-form navbar-top">
+
+                <form class="navbar-form">
+                    <div class="col-lg-9">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curBranch" ng-options="bran.name for bran in branchs track by bran.value"></select>
+                        </div>
+                        <button class="btn btn-default" ng-click="ClearTable()" ng-disabled="curBranch.value == null">Очистить</button>
+                        <button class="btn btn-default" ng-click="LoadGitHubTable()" ng-disabled="curBranch.value == null">Загрузить</button>
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curRegion" ng-options="reg.sName for reg in csvRegion.csv track by reg.sID_UA" ng-show="csvRegion.csv.length != null"></select>
+                        </div>
+
+                        <button class="btn btn-default" ng-click="getResult()">Result</button>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="progress progress-striped" ng-class="(progres.val < 100) ? 'active': ' '">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{progres.val}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progres.val}}%;">
+                                {{progres.val}}%
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table">
+        <tr>
+            <th ng-repeat="hed in visionMain.header">
+                {{hed}}
+            </th>
+        </tr>
+
+        <tr ng-repeat="rows in visionMain.csv">
+            <td ng-repeat="colum in rows">{{colum}}</td>
+
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="uk" ng-app="App">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>iGov analytic</title>
+	<meta charset="utf-8" />
+    <!--<base href="/">-->
+
+    <!-- Bootstrap Core CSS -->
+    <script src="app/lib/angular-1.6.1/angular.min.js"></script>
+    <script src="app/lib/angular-1.6.1/angular-route.min.js"></script>
+    <script src="app/lib/angular-1.6.1/angular-resource.min.js"></script>
+
+
+    <script src="app/analystApps/serviceRegion/app/table_csv.js"></script>
+
+    <script src="app/src/app.js"></script>
+    <script src="app/src/mainCtrl.js"></script>
+
+    <script src="app/analystApps/serviceRegion/app/controller.js"></script>
+
+    <link href="app/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- MetisMenu CSS -->
+    <link href="app/lib/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="app/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="app/css/style.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-controller="mainCtrl">
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">iGov <br> <span>аналитик</span> </a>
+            </div>
+            <ng-include src="topMenu"></ng-include>
+            <ng-include src="mainMenu"></ng-include>
+        </nav>
+
+        <div id="page-wrapper">
+            <div ng-view=""></div>
+        </div>
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="app/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="app/lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="app/lib/metisMenu/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="app/src/sb-admin-2.js"></script>
+</body>
+</html>

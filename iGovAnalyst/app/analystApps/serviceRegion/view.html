@@ -1,0 +1,64 @@
+﻿<div ng-controller="serviceRegionCtrl">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-form navbar-top">
+
+                <form class="navbar-form">
+                    <div class="col-lg-9">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curBranch" ng-options="bran.name for bran in branchs track by bran.value"></select>
+                        </div>
+                        <button class="btn btn-default" ng-click="ClearTable()" ng-disabled="curBranch.value == null">Очистить</button>
+                        <button class="btn btn-default" ng-click="LoadGitHubTable()" ng-disabled="curBranch.value == null">Загрузить</button>
+                        <div class="form-group">
+                            <select class="form-control" ng-model="curRegion" ng-options="reg.sName for reg in csvRegion.csv track by reg.sID_UA" ng-show="csvRegion.csv.length != null"></select>
+                        </div>
+
+                        <button class="btn btn-default" ng-click="getResult()" ng-disabled="curBranch.value == null || curRegion.nID == null" ng-show="csvRegion.csv.length != null">Result</button>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="progress progress-striped" ng-class="(progres.val < 100) ? 'active': ' '">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{progres.val}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progres.val}}%;">
+                                {{progres.val}}%
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ctnr">
+        <h1>{{curRegion.sName}} область</h1>
+        <table class="table table-bordered table-condensed" style="width:{{visionMain.header.cities.length*75 + 500}}px">
+            <tr>
+                <th>
+                    Відповідальний орган
+                </th>
+                <th>
+                    Назва послуги
+                </th>
+                <th ng-repeat="hed in visionMain.header.cities">
+                    {{hed.sName}}
+                </th>
+            </tr>
+            <tr ng-repeat="rows in visionMain.body">
+                <td class="w100">
+                    <div class="cliped name-service w100" title="{{rows.firstColumn.sSubjectOperatorName}}">
+                        {{rows.firstColumn.sSubjectOperatorName}}
+                    </div>
+                </td>
+                <td class="w1000">
+                    <div class="cliped name-service w1000" title="{{rows.firstColumn.sName}}">
+                        {{rows.firstColumn.sName}}
+                    </div>
+                </td>
+                <td class="cliped name-service w50" ng-repeat="cell in rows.bodyColumn" ng-class="(cell.flag)?'eject':'reject'">
+                    <span ng-if="cell.flag">{{cell.nID_Place}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

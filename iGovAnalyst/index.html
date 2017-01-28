@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="uk" ng-app="App">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>iGov analytic</title>
+	<meta charset="utf-8" />
+    <!--<base href="/">-->
+
+    <script src="app/lib/angular-1.6.1/angular.min.js"></script>
+    <script src="app/lib/angular-1.6.1/angular-route.min.js"></script>
+    <script src="app/lib/angular-1.6.1/angular-resource.min.js"></script>
+
+
+    <script src="app/src/table_csv.js"></script>
+    <script src="app/src/app.js"></script>
+
+    <script src="app/src/mainCtrl.js"></script>
+    <script src="app/analystApps/serviceRegion/controller.js"></script>
+    <script src="app/analystApps/serviceAllUA/controller.js"></script>
+    <script src="app/analystApps/serviceRegionTest/app/controller.js"></script>
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="app/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="app/css/style.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-controller="mainCtrl">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">iGov <br> <span>аналитик</span> </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ng-include src="headMenu"></ng-include>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div ng-view=""></div> <!-- /container -->
+
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="app/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="app/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- На удаление -->
+    <link href="app/css/sb-admin-2.css" rel="stylesheet" />
+    <script src="app/src/sb-admin-2.js"></script>
+    <link href="app/lib/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <script src="app/lib/metisMenu/metisMenu.min.js"></script>
+</body>
+</html>
