@@ -23,25 +23,31 @@ angular.module("App")
 
             new tableCSCtoJSON(branch, "Region")
                 .then(function (responce) {
-                    $scope.csvRegion = responce;
+                    $scope.csvRegion = responce
+                        .selectNotValue('nID', undefined);
                     $scope.progres.val += 25;
                 });
 
             new tableCSCtoJSON(branch, "Place")
                  .then(function (responce) {
-                     $scope.csvPlace = responce.selectFill('nID ; sID_UA ; sName');
+                     $scope.csvPlace = responce
+                        .selectFill('nID ; sID_UA ; sName')
+                        .selectNotValue('nID', undefined);
                      $scope.progres.val += 25;
                  });
 
             new tableCSCtoJSON(branch, "Service")
                 .then(function (responce) {
-                    $scope.csvService = responce.selectFill('nID ; sName ; sSubjectOperatorName');
+                    $scope.csvService = responce
+                        .selectFill('nID ; sName ; sSubjectOperatorName')
+                        .selectNotValue('nID', undefined);
                     $scope.progres.val += 25;
                 });
 
             new tableCSCtoJSON(branch, "ServiceData")
                 .then(function (responce) {
                     $scope.csvServiceData = responce
+                        .selectNotValue('nID', undefined)
                         .selectFill('nID_Service;nID_Place;nID_City;nID_Region;oData;bHidden;bTest')
                         .selectValue('bTest', 'false')
                         .selectValue('bTest', 'false')
@@ -105,224 +111,88 @@ angular.module("App")
             }
         }
 
-        $scope.getResult1 = function () {
-
-            //var
-
-
-
-            $scope.urlTable = $scope.mainTable;
-
-            //$scope.urlTable = $scope.testTable;
-
-            //var curTable = [];
-            //var rowHead = ["Відповідальний орган", "Назва послуги"];
-
-
-            var SD = $scope.getServiceDataForRegion($scope.curRegion)
-
-
-            /*----------------------------------------------------------*/
-            /*--------------              Шапка         ----------------*/
-            /*----------------------------------------------------------*/
-
-            //города
-            var placeTable = $scope.csvPlace.clone().selectIntersectionFill('nID',
-                //вытаскиваем перечень ID городов
-                SD.placeSD.clone().getColumnCollect('nID_City'),
-                'nID_City').csv;
-
-            var headPlaceTable = [];
-            for (var i = 0; i < placeTable.length; i++) {
-                headPlaceTable[i] = placeTable[i];
-            }
-
-            /*----------------------------------------------------------*/
-            /*--------------            Тело            ----------------*/
-            /*----------------------------------------------------------*/
-            /*--------------      Первая колонка        ----------------*/
-
-            //услуги
-            var cerviceTable = $scope.csvService.clone()
-                //удаляем тестовые услуги
-                .selectNotValue('sSubjectOperatorName', 'Тестова служба')
-                .selectIntersectionFill('nID',
-                //передаем коллекцию нормеров услуг
-                SD.all.clone().getColumnCollect('nID_Service'),
-                'nID_Service').csv;
-
-            //формируем результирующую таблицу
-            var bodyService = [];
-            for (var i = 0; i < cerviceTable.length; i++) {
-
-                //текущая строке регионов привязанных к услуге
-                var rowCur = [];
-                for (var j = 0; j < placeTable.length; j++) {
-                    var curCell = {
-                        nID_Place: placeTable[j]["nID"],
-                        sID_UA: placeTable[j]["sID_UA"],
-                        region: null,
-                        flag: false
-                    };
-                    rowCur.push(curCell);
-                }
-                bodyService.push({
-                    firstColumn: cerviceTable[i],//коллекция названий услуг
-                    bodyColumn: rowCur //коллекция полей городов
-                });
-            }
-
-
-
-
-            /*--------------        Услуги          ----------------*/
-
-
-            //коллекция Сервис даты для городов ограниченная двумя полями 
-            var masSDPlaceCut = SD.placeSD.clone().selectFill("nID_City;nID_Service");
-            // массив ID услуг 
-            var masServicePlace = masSDPlaceCut.clone().getColumnCollect('nID_Service').csv;
-
-            for (var i = 0; i < masServicePlace.length; i++) {//перебираем услуги
-                for (var j = 0; j < bodyService.length; j++) {//перебираем результирующую таблицу
-                    //ищем в нашей результирующей таблице нужную услугу из услуг НА ГОРОД
-                    if (bodyService[j].firstColumn.nID == masServicePlace[i].nID_Service) {
-                        bodyService[j].firstColumn["region"] = "city";
-                        //вытаскием список городов который связан с услугой
-                        var masServiceByPlace = masSDPlaceCut.clone().selectValue('nID_Service', masServicePlace[i].nID_Service).csv;
-                        for (var n = 0; n < masServiceByPlace.length; n++) {
-                            for (var m = 0; m < bodyService[j].bodyColumn.length; m++) {
-                                //ищем нужный город в нужной услуге
-                                if (masServiceByPlace[n].nID_City == bodyService[j].bodyColumn[m].nID_Place) {
-                                    bodyService[j].bodyColumn[m].flag = true;
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
+        //удаление тестовых услуг
+        $scope.getNotTestService = function () {
+            var service = $scope.csvService.clone().selectNotValue('sSubjectOperatorName', 'Тестова служба');
+            for (var i = 0; i < service.csv.length; i++) {
+                if (service.csv[i].sName.substr(0, 1) == '_') {
+                    service.csv.splice(i, 1);
+                    i--;
                 }
             }
-
-            //коллекция Сервис даты для ОБЛАСТЕЙ ограниченная двумя полями 
-            var masSDRegionCut = SD.regionSD.clone().selectFill("nID_Service");
-            //console.log(masSDRegionCut);
-            var masServiceRegion = masSDRegionCut.clone().getColumnCollect('nID_Service').csv;
-
-            for (var i = 0; i < masServiceRegion.length; i++) {//перебираем услуги
-                for (var j = 0; j < bodyService.length; j++) {//перебираем результирующую таблицу
-                    //ищем в нашей результирующей таблице нужную услугу из услуг НА ОБЛАСТЬ
-                    if (bodyService[j].firstColumn.nID == masServiceRegion[i].nID_Service) {
-                        bodyService[j].firstColumn["region"] = "region";
-                        //вытаскием список городов который связан с услугой
-                        var masServiceByPlace = masSDRegionCut.clone().selectValue('nID_Service', masServiceRegion[i].nID_Service).csv;
-                        for (var n = 0; n < masServiceByPlace.length; n++) {
-                            for (var m = 0; m < bodyService[j].bodyColumn.length; m++) {
-                                bodyService[j].bodyColumn[m].flag = true;
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-
-            //коллекция Сервис даты для ВСЕЙ УКРАИНЫ ограниченная двумя полями 
-            var masSDUACut = SD.uaSD.clone().selectFill("nID_Service");
-            var masServiceUA = masSDUACut.clone().getColumnCollect('nID_Service').csv;
-
-            for (var i = 0; i < masServiceUA.length; i++) {//перебираем услуги
-                for (var j = 0; j < bodyService.length; j++) {//перебираем результирующую таблицу
-
-                    //ищем в нашей результирующей таблице нужную услугу из услуг НА ВСЮ УКРАИНУ
-                    if (bodyService[j].firstColumn.nID == masServiceUA[i].nID_Service) {
-                        bodyService[j].firstColumn["region"] = "ua";
-                        //вытаскием список городов который связан с услугой
-                        var masServiceByPlace = masSDUACut.clone().selectValue('nID_Service', masServiceUA[i].nID_Service).csv;
-                        for (var n = 0; n < masServiceByPlace.length; n++) {
-                            for (var m = 0; m < bodyService[j].bodyColumn.length; m++) {
-                                bodyService[j].bodyColumn[m].flag = true;
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-
-
-
-
-            var result = {
-                header: {
-                    cities: headPlaceTable
-                },
-                body: bodyService
-            }
-
-
-            console.log(result);
-
-            $scope.visionMain = result;
-
+            return service;
         }
 
 
         $scope.getResult = function () {
+
+            var nID_ServiceNotTest = $scope.getNotTestService().clone().getColumnCollect('nID');
+
+            var serviceData = $scope.csvServiceData.clone()
+                    .selectIntersectionFill('nID_Service', nID_ServiceNotTest, 'nID');
+
+            var place = $scope.csvPlace.clone();
+            var region = $scope.csvRegion.clone();
+
+
             //получаем уникальные ID городов/областей/Украины
-            var unicAllPlace = $scope.csvServiceData.clone().getColumnCollect('nID_Place')
-                .addColumnCollect('nID_Place', 'nID', $scope.csvPlace.clone(), 'sID_UA;sName')
+            var unicAllPlace = serviceData.clone().getColumnCollect('nID_Place')
+                //добавляем их в таблицу
+                .addColumnCollect('nID_Place', 'nID', place, 'sID_UA;sName')
+                //добавляем новую колонку для суммирование услуг по данному nID_Place и занулям ее
+                .addColumnNew('numberService', 0);
+
+            //производим подсчет услуг
+            for (var i = 0; i < serviceData.csv.length; i++) {
+                for (var j = 0; j < unicAllPlace.csv.length; j++) {
+                    if (serviceData.csv[i].nID_Place == unicAllPlace.csv[j].nID_Place) {
+                        unicAllPlace.csv[j].numberService += 1;
+                        break;
+                    }
+                }
+            }
+
 
             var regionService = [];
 
-            for (var i = 0; i < $scope.csvRegion.csv.length; i++) {
+            for (var i = 0; i < region.csv.length; i++) {
                 var curReg = {
-                    nID: $scope.csvRegion.csv[i].nID,
-                    sName: $scope.csvRegion.csv[i].sName,
-                    sID_UA: parseInt($scope.csvRegion.csv[i].sID_UA.substr(1, $scope.csvRegion.csv[i].sID_UA.length - 2), 10)
+                    nID: region.csv[i].nID,
+                    sName: region.csv[i].sName,
+                    sID_UA: parseInt(region.csv[i].sID_UA.substr(1, region.csv[i].sID_UA.length - 2), 10),
+                    nID_Place: 0,
+                    numberService: 0,
+                    places: []
                 }
                 regionService.push(curReg);
             }
 
             for (var i = 0; i < unicAllPlace.csv.length; i++) {
-                if (angular.isNumber(unicAllPlace.csv[i])) {
-                    for (var j = 0; j < regionService.length; j++) {
-                        if (unicAllPlace.csv[i].sID_UA == regionService[j].sID_UA) {
-                            regionService[j]['nID_Place'] = unicAllPlace.csv[i].nID_Place;
-                            break;
-                        } else if ((unicAllPlace.csv[i].sID_UA > regionService[j].sID_UA) &&
-                            (unicAllPlace.csv[i].sID_UA < (regionService[j].sID_UA + 100000000))) {
-                            regionService[j]['places'].push(unicAllPlace.csv[i]);
-                            break;
-                        }
+                for (var j = 0; j < regionService.length; j++) {
+                    if (unicAllPlace.csv[i].sID_UA == regionService[j].sID_UA) {
+                        regionService[j]['nID_Place'] = unicAllPlace.csv[i].nID_Place;
+                        regionService[j]['numberService'] = unicAllPlace.csv[i].numberService;
+                        break;
+                    } else if ((unicAllPlace.csv[i].sID_UA > regionService[j].sID_UA) &&
+                        (unicAllPlace.csv[i].sID_UA < (regionService[j].sID_UA + 100000000))) {
+                        regionService[j]['places'].push(unicAllPlace.csv[i]);
+                        break;
                     }
                 }
             }
 
-
-            var uaService = $scope.csvServiceData.clone().selectValue('nID_Place', 'NULL').csv.length;
-
-
             //соритируем по областям
             var sortCity = {
-                num: uaService,
+                numberService: serviceData.clone().selectValue('nID_Place', 'NULL').csv.length,
                 region: regionService
             };
 
+            console.log(sortCity);
 
-
-
-
-
-
-
-            console.log(unicAllPlace);
-
-            $scope.visionMain = unicAllPlace;
+            $scope.visionMain = sortCity;
 
         }
-
-
-
-
+        
         //первичная инициализация, запуск автозаполнения
         $scope.init($scope.curBranch.value);
     });

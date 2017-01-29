@@ -209,6 +209,14 @@ angular.module('TableCsvModule', [])
             getColumnCollect: function (nameCol) {
                 return this.selectFill(nameCol).allSorting(nameCol).deleteDublicate(nameCol);
             },
+            //добавление колонки со значением
+            addColumnNew: function (nameCol, value) {
+                this.header[nameCol] = nameCol;
+                for (var i = 0; i < this.csv.length; i++) {
+                    this.csv[i][nameCol] = value;
+                }
+                return this;
+            },
             //добавление колонки с другой таблицы (вставляется только первый входящий), где 
             //keyCol-ключ текущей таблицы, 
             //idCol - id по которому искать строку (если keyCol == idCol)
@@ -224,11 +232,12 @@ angular.module('TableCsvModule', [])
                 for (var i = 0; i < selCols.length; i++) {
                     //удаляем лишние пробелы
                     selCols[i] = selCols[i].replace(/^\s*|\s*$/g, "");
-                    this.header[selCols[i]] = selCols[i];
+
+                    this.addColumnNew(selCols[i], 'NULL')
+
+                    //this.header[selCols[i]] = selCols[i];
                     nameNeedCols += ';' + selCols[i]
                 }
-                console.log(selCols)
-
 
                 //оптимизируем таблицу
                 var tableOpt = table.clone().selectFill(nameNeedCols);
@@ -236,9 +245,9 @@ angular.module('TableCsvModule', [])
                 //проводим поиск и добавляем колонку в текущую таблицу
                 for (var i = 0; i < this.csv.length; i++) {
                     //значение по умолчанию
-                    for (var k  = 0; k < selCols.length; k++) {
-                        this.csv[i][selCols[k]] = 'NULL';
-                    }
+                    //for (var k  = 0; k < selCols.length; k++) {
+                    //    this.csv[i][selCols[k]] = 'NULL';
+                    //}
                     
                     for (var j = 0; j < tableOpt.csv.length; j++) {
                         if (tableOpt.csv[j][idCol] == this.csv[i][keyCol]) {

@@ -11,9 +11,6 @@
                         </div>
                         <button class="btn btn-default" ng-click="ClearTable()" ng-disabled="curBranch.value == null">Очистить</button>
                         <button class="btn btn-default" ng-click="LoadGitHubTable()" ng-disabled="curBranch.value == null">Загрузить</button>
-                        <div class="form-group">
-                            <select class="form-control" ng-model="curRegion" ng-options="reg.sName for reg in csvRegion.csv track by reg.sID_UA" ng-show="csvRegion.csv.length != null"></select>
-                        </div>
 
                         <button class="btn btn-default" ng-click="getResult()">Result</button>
 
@@ -29,18 +26,98 @@
             </div>
         </div>
     </nav>
+    <div class="container">
 
-    <table class="table">
-        <tr>
-            <th ng-repeat="hed in visionMain.header">
-                {{hed}}
-            </th>
-        </tr>
 
-        <tr ng-repeat="rows in visionMain.csv">
-            <td ng-repeat="colum in rows">{{colum}}</td>
 
-        </tr>
-    </table>
+        <table class="table table-bordered table-hover table-condensed">
+            <colgroup>
+                <col width="40%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th rowspan="2">
+                        Регион
+                    </th>
+
+                    <th colspan="4">
+                        Услуг
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Регион
+                    </th>
+                    <th>
+                        Область
+                    </th>
+                    <th>
+                        Украина
+                    </th>
+
+                    <th>
+                        Уникальных итого
+                    </th>
+                </tr>
+            </thead>
+            <tr class="success">
+                <td>
+                    <h3>Вся Украина</h3>                    
+                </td>
+                <td>
+                    —
+                </td>
+                <td>
+                    —
+                </td>
+                <td>
+                    <span class="badge b bg-info">{{visionMain.numberService}}</span>
+                </td>
+                <td>
+                    —
+                </td>
+            </tr>
+
+            <tr ng-repeat-start="region in visionMain.region" class="panel-heading info" data-toggle="collapse" data-parent="#accordion" href=".region{{region.nID}}">
+                <td>
+                    <h4>{{region.sName}} - <span class="badge">{{region.places.length}}</span></h4>
+                </td>
+                <td>
+                    —
+                </td>
+                <td>
+                    <span class="badge">{{region.numberService}}</span>
+                </td>
+                <td>
+                    <span class="badge">{{visionMain.numberService}}</span>
+                </td>
+                <td>
+                    —
+                </td>
+            </tr>
+            <tr ng-repeat-end ng-repeat="place in region.places" class="region{{region.nID}} panel-collapse collapse warning">
+                <td>
+                    {{place.sName}}
+                </td>
+                <td>
+                    <span class="badge">{{place.numberService}}</span>
+                </td>
+                <td>
+                    <span class="badge">{{region.numberService}}</span>
+                </td>
+                <td>
+                    <span class="badge">{{visionMain.numberService}}</span>
+                </td>
+                <td>
+                    <span class="badge">{{place.numberService + region.numberService + visionMain.numberService}}</span>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 
 </div>
