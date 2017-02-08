@@ -17,7 +17,7 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
           //,controller: 'MainCtrl'
       })
       .when('/index', {
-          templateUrl: '/app/view/main.html'
+          templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
       .when('/service-region', {
