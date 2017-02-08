@@ -9,11 +9,11 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
 //})
 .config(function ($locationProvider, $routeProvider) {
 
-    //$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
 
     $routeProvider
       .when('/', {
-          templateUrl: '/app/view/main.html'
+          templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
       .when('/index', {
