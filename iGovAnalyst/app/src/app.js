@@ -21,15 +21,15 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
           //,controller: 'MainCtrl'
       })
       .when('/service-region', {
-          templateUrl: '/app/analystApps/serviceRegion/view.html'
+          templateUrl: 'app/analystApps/serviceRegion/view.html'
           //,controller: 'AboutCtrl'
       })
       .when('/service-all-ua', {
-          templateUrl: '/app/analystApps/serviceAllUA/view.html'
+          templateUrl: 'app/analystApps/serviceAllUA/view.html'
           //,controller: 'AboutCtrl'
       })
       .when('/service-test', {
-          templateUrl: '/app/analystApps/serviceRegionTest/index.html'
+          templateUrl: 'app/analystApps/serviceRegionTest/index.html'
           //,controller: 'AboutCtrl'
       })
       .otherwise({
