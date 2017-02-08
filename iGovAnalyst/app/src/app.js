@@ -16,19 +16,19 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
           templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
-      .when('index/', {
+      .when('/index/', {
           templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
-      .when('service-region/', {
+      .when('/service-region/', {
           templateUrl: 'app/analystApps/serviceRegion/view.html'
           //,controller: 'AboutCtrl'
       })
-      .when('service-all-ua/', {
+      .when('/service-all-ua/', {
           templateUrl: 'app/analystApps/serviceAllUA/view.html'
           //,controller: 'AboutCtrl'
       })
-      .when('service-test/', {
+      .when('/service-test/', {
           templateUrl: 'app/analystApps/serviceRegionTest/index.html'
           //,controller: 'AboutCtrl'
       })
