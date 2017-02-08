@@ -7,6 +7,6 @@ angular.module("App")
 
         //$scope.topMenu = "/app/view/topMenu.html";
         //$scope.mainMenu = "/app/view/mainMenu.html";
-        $scope.headMenu = "/app/view/headMenu.html";
+        $scope.headMenu = "app/view/headMenu.html";
 
     });
