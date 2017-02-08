@@ -13,23 +13,23 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
 
     $routeProvider
       .when('/', {
-          templateUrl: '/app/view/main.html'
+          templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
       .when('/index', {
-          templateUrl: '/app/view/main.html'
+          templateUrl: 'app/view/main.html'
           //,controller: 'MainCtrl'
       })
       .when('/service-region', {
-          templateUrl: '/app/analystApps/serviceRegion/view.html'
+          templateUrl: 'app/analystApps/serviceRegion/view.html'
           //,controller: 'AboutCtrl'
       })
       .when('/service-all-ua', {
-          templateUrl: '/app/analystApps/serviceAllUA/view.html'
+          templateUrl: 'app/analystApps/serviceAllUA/view.html'
           //,controller: 'AboutCtrl'
       })
       .when('/service-test', {
-          templateUrl: '/app/analystApps/serviceRegionTest/index.html'
+          templateUrl: 'app/analystApps/serviceRegionTest/index.html'
           //,controller: 'AboutCtrl'
       })
       .otherwise({
