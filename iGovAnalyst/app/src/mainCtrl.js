@@ -2,8 +2,9 @@
 
 
 angular.module("App")
-    .controller("mainCtrl", function ($scope) {
-
+    .controller("mainCtrl", function ($locationProvider, $scope) {
+        
+        $locationProvider.html5Mode(true);
 
         //$scope.topMenu = "/app/view/topMenu.html";
         //$scope.mainMenu = "/app/view/mainMenu.html";
