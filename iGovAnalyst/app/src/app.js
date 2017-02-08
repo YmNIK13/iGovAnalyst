@@ -13,7 +13,7 @@ angular.module("App", ["ngResource", "ngRoute", "TableCsvModule"
 
     $routeProvider
       .when('/', {
-          templateUrl: 'app/view/main.html'
+          templateUrl: 'app/analystApps/serviceRegion/view.html'
           //,controller: 'MainCtrl'
       })
       .when('/index', {
